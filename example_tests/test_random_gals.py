@@ -23,6 +23,12 @@ Extend the module to handle 3 spatial dimensions. How would you update the tests
 account for this? BE CAREFUL! At every step, we want to ensure that our tests are still
 passing.
 
+Add some extra statistics and test them. Perhaps a stellar mass function that counts the
+number of galaxies within stellar mass bins?  Generate some galaxies, compute the SMF and
+save the output. Then read in the EXACT same galaxies and compare the newly calculate SMF
+with the old "correct" output.  Can you extend this to be randomly generated on-the-fly?
+Does that even make sense?
+
 Author: Jacob Seiler
 """
 
