@@ -13,7 +13,8 @@
   the correct version?
 * Expected number of rows/columns change.
 * Should be failing early.  Maybe have some code where it fails at the end but
-  the problem is actually at the start.
+  the problem is actually at the start (e.g., performing many operations on
+  something that should be an integer, but was calculated as a float somewhere).
 * Extending some code to add new features.
 * Maybe some functions that explicit say what they expect and have tests that
   check what happens if you give it different things. E.g., function asks for a
