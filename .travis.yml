@@ -21,7 +21,8 @@ matrix:
       language: shell       # 'language: python' is an error on Travis CI macOS
 
 before_install:
-  - pip install -r requirements.txt
+  - pip3 install --upgrade pip # Apparently both Linux and osx are happy with pip3.
+  - pip3 install -r requirements.txt
 
 script:
-  - pytest
+  - python3 -m pytest # Ensure we're using Python3 to run pytest. 
