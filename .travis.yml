@@ -24,6 +24,9 @@ before_install:
 	- |
       if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
           sudo apt-get update -q
+      else
+          brew update
+          brew upgrade python
 			fi
   - pip install -r requirements.txt
 
