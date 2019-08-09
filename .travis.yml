@@ -17,6 +17,8 @@ matrix:
 
     - os: osx 
       python: "3.7"
+      osx_image: xcode10.2  # Python 3.7.2 running on macOS 10.14.3
+      language: shell       # 'language: python' is an error on Travis CI macOS
 
 before_install:
   - sudo apt-get update -q
