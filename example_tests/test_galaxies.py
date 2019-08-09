@@ -11,7 +11,13 @@ Generate some data using a pre-determined seed and check the results match the e
 Your Tasks
 ----------
 
-Generate some random galaxies and properties and write them both to file.  In the test proper, read in the galaxies, execute the same functions, then check if the results match the answer written to file. 
+Generate some random galaxies and write them to file (using the functions in
+``galaxy.py``). Read this data back in and ensure that it is correct.  Should this data be
+kept on disk after the test? Should the test delete it?
+
+Generate some random galaxies and properties and write them both to file.
+In the test proper, read in the galaxies, execute the same functions, then check if the
+results match the answer written to file. 
 
 Generate a random set of galaxies and check their output. How do you handle random numbers
 in testing scenarios?
@@ -22,7 +28,6 @@ What happens when there are zero galaxies in the region passed to
 Extend the module to handle 3 spatial dimensions. How would you update the tests to
 account for this? BE CAREFUL! At every step, we want to ensure that our tests are still
 passing.
-
 
 Author: Jacob Seiler
 """

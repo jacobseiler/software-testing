@@ -1,0 +1,28 @@
+language: python 
+sudo: required
+dist: xenial
+
+notifications:
+  email:
+    recipients:
+      - jseiler@swin.edu.au 
+    on_success: change
+    on_failure: always
+
+matrix:
+
+  include:
+    - os: linux
+      env: PYTHON_VERSION=3.7
+      before_install:
+        - wget http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+
+install:
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - conda create -q --yes -n test python=$PYTHON_VERSION 
+  - source activate test
+  - pip install -r requirements.txt
+
+script:
+  - pytest
