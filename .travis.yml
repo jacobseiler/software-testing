@@ -21,7 +21,10 @@ matrix:
       language: shell       # 'language: python' is an error on Travis CI macOS
 
 before_install:
-  - sudo apt-get update -q
+	- |
+      if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+          sudo apt-get update -q
+			fi
   - pip install -r requirements.txt
 
 script:
