@@ -44,6 +44,7 @@ def test_gal_class():
     assert(gal.y == -21.5)
     assert(gal.mass == -20)
 
+
 @pytest.mark.parametrize(
         "x_bound, y_bound, expected_mass, expected_N, seed",
         [([0,50.0], [23.0, 28.0], 17.55854294814121, 29, 777)]
@@ -57,6 +58,11 @@ def test_mass_in_region(x_bound, y_bound, expected_mass, expected_N, seed):
 
     Can you implement a similar test that reads previously generated galaxies, calculates
     some statistics, then compares the answer to the "correct" answer?
+
+    In some instances, we may WANT a test to fail to check certain conditions. In these
+    instances, we want the individual test to fail, but for the overall pytest to pass.
+    Search the ``pytest.mark.parametrize`` docs for the correct way to do this. Can you
+    choose some parameters to get this scenario to work? When would this be useful?
 
     Parameters
     ----------
