@@ -6,7 +6,7 @@
 * 13:30 - 14:30 Implementing your own tests.
 * 14:30 - 15:00 Maintaining your tests (`pytest-cov`, `pytest-pep8`).
 * 15:00 - 15:30 Afternoon tea.
-* 15:30 - 17:00 Travis CI, 
+* 15:30 - 17:00 Travis CI.
     * Here's a bunch of extra things.  "When you do TRAVIS, here are a bunch of
       extension..."
       * When you do code coverage, you can have it print or you can just send
