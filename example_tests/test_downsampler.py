@@ -12,15 +12,9 @@ except ImportError: #Python3
     from urllib.request import urlretrieve
 import subprocess
 
-# Get the directorys where we launched this script from and where the
-# downsample script is located.
-test_dir = os.path.dirname(os.path.realpath(__file__))
-script_dir = "{0}/../src/".format(test_dir)
-sys.path.append(script_dir)
+import downsampler
 
-import downsample 
-
-tol = 1e-16  # Set the tolerance of the tests. 
+tol = 1e-16  # Set the tolerance of the tests.
 
 
 def unit_tests(grid, expected_gridsize, expected_datatype=np.float64):
@@ -31,8 +25,8 @@ def unit_tests(grid, expected_gridsize, expected_datatype=np.float64):
     ----------
 
     grid : `~numpy.ndarray`
-        The 3D downsampled array created by `downsample`. 
-    
+        The 3D downsampled array created by `downsample`.
+
     expected_gridsize : int, optional
         The expected 1D size of output grid.  Default : 128 and 64.
 
@@ -47,11 +41,11 @@ def unit_tests(grid, expected_gridsize, expected_datatype=np.float64):
     RuntimeError
         Raised if the output grid is not in the expected shape specified when
         `subample` was called.
-        Raised if any values in the output grid are not `np.float64` types. 
+        Raised if any values in the output grid are not `np.float64` types.
     """
 
     # Check that the grid is cubic with the expected gridsize.
-    if not grid.shape == (expected_gridsize, 
+    if not grid.shape == (expected_gridsize,
                           expected_gridsize,
                           expected_gridsize):
         print("The output grid shape was expected to be ({0}, {0}, {0})" \
@@ -63,11 +57,11 @@ def unit_tests(grid, expected_gridsize, expected_datatype=np.float64):
     for (i, j, k) in itertools.product(range(expected_gridsize),
                                        range(expected_gridsize),
                                        range(expected_gridsize)):
-        if not type(grid[i,j,k]) == expected_datatype: 
-            print("The input data format was a `{4}`.  The output " 
-                  "data type should be identical however for element " 
+        if not type(grid[i,j,k]) == expected_datatype:
+            print("The input data format was a `{4}`.  The output "
+                  "data type should be identical however for element "
                   "({0},{1},{2}) it was {3}".format(i,j,k,type(grid[i,j,k]),
-                    expected_datatype)) 
+                    expected_datatype))
             raise RuntimeError
 
 
@@ -106,7 +100,7 @@ def test_homogenous_input(input_gridsize=128, output_gridsize=64):
         0.99999 to 1.00001.
     """
 
-    # Generate a homogenous input grid filled with 1. 
+    # Generate a homogenous input grid filled with 1.
     input_grid = np.ones((input_gridsize, input_gridsize, input_gridsize),
                          dtype=np.float64)
 
@@ -132,10 +126,10 @@ def test_multiple_input(input_gridsize=128, output_gridsize=64):
     """
     Tests that passing an input grid where every input_gridsize/output_gridsize
     cell is filled will a value of (input_gridsize/output_gridsize)^3 produces
-    a grid that is homogenously filled with values of 1.0. 
+    a grid that is homogenously filled with values of 1.0.
 
     The test will fail if the output grid is not homogenously filled with
-    values of 1.0. 
+    values of 1.0.
 
     We also run a suite of unit tests (see `unit_tests` function) that will
     return a RuntimeError if they're not passed.
@@ -164,27 +158,27 @@ def test_multiple_input(input_gridsize=128, output_gridsize=64):
         (within tolerance defined by the global variable `tol`).
     """
 
-    # Ratio in grid size. 
+    # Ratio in grid size.
     conversion = int(input_gridsize / output_gridsize)
-    
+
     input_grid = np.zeros((input_gridsize, input_gridsize, input_gridsize))
 
     # We fill every conversion-th cell with a value of conversion cubed.
     for (i, j, k) in itertools.product(range(output_gridsize),
                                        range(output_gridsize),
                                        range(output_gridsize)):
-        input_grid[i*conversion, j*conversion, k*conversion] = conversion**3 
+        input_grid[i*conversion, j*conversion, k*conversion] = conversion**3
 
     # Run the downsampler.
     output_grid = downsample.downsample_grid(input_grid, output_gridsize)
 
 
     # Find any instances where the output grid is not 1.
-    w = np.where((output_grid <= 1.0-tol) & (output_grid >= 1.0+tol))[0]    
-    if len(w) > 0: 
+    w = np.where((output_grid <= 1.0-tol) & (output_grid >= 1.0+tol))[0]
+    if len(w) > 0:
         print("We tested an input grid with every {0} cell containing a value "
-              "of {1}. We expected the output grid to contain values of 1.0 " 
-              "as well.".format(conversion, conversion**3)) 
+              "of {1}. We expected the output grid to contain values of 1.0 "
+              "as well.".format(conversion, conversion**3))
         print("However cells {0} had values {1}".format(w, output_grid[w]))
         raise RuntimeError
 
@@ -192,7 +186,7 @@ def test_multiple_input(input_gridsize=128, output_gridsize=64):
     unit_tests(output_grid, output_gridsize)
 
 
-def test_random(input_gridsize=128, output_gridsize=64, 
+def test_random(input_gridsize=128, output_gridsize=64,
                 seed=12, save_output=False):
     """
     Generates an input grid of random numbers.  This is then checked against a
@@ -231,7 +225,7 @@ def test_random(input_gridsize=128, output_gridsize=64,
 
     RuntimeError
         Raised if the randomly generated input grid does not match (to a
-        tolerance defined by the global variable `tol`) the saved grid. 
+        tolerance defined by the global variable `tol`) the saved grid.
     """
 
     # Set the RNG seed and generate an input grid.
@@ -246,10 +240,10 @@ def test_random(input_gridsize=128, output_gridsize=64,
 
     # Now we want to set up the known grid.
     known_grid_name = "{0}/known_grid_in{1}_out{2}_seed{3}.npz" \
-                       .format(test_dir, input_gridsize, output_gridsize, seed)   
+                       .format(test_dir, input_gridsize, output_gridsize, seed)
 
     # If we're saving a new 'correct' output grid, do so and exit.
-    if save_output: 
+    if save_output:
         np.savez(known_grid_name, output_grid)
         return
 
@@ -272,46 +266,3 @@ def test_random(input_gridsize=128, output_gridsize=64,
 
     # Now run some unit tests that check some properties.
     unit_tests(output_grid, output_gridsize)
-
-
-def run_tests():
-    """
-    Wrapper to run all the tests.
-
-    Parameters
-    ----------
-
-    None.
-
-    Returns
-    ----------
-
-    None.
-    """
-
-    print("=================================")
-    print("Running tests")
-    print("=================================")
-    print("")
-
-    print("Testing a homogenous grid input")
-    test_homogenous_input()
-
-    print("")
-    print("Testing an input where every input_gridsize/output_gridsize cell " 
-          "has a value of (input_gridsize/output_gridsize)^3.")
-    test_multiple_input()
-
-    print("")
-    print("Testing a randomly generated grid with known seed.")
-    test_random()
-
-    print("")
-    print("=================================")
-    print("All tests passed!")
-    print("=================================")
-
-
-if __name__ == '__main__':
-
-    run_tests()
