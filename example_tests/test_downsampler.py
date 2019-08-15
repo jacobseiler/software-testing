@@ -12,7 +12,7 @@ except ImportError: #Python3
     from urllib.request import urlretrieve
 import subprocess
 
-import downsampler
+from downsampler import downsample_grid
 
 tol = 1e-16  # Set the tolerance of the tests.
 
@@ -105,7 +105,7 @@ def test_homogenous_input(input_gridsize=128, output_gridsize=64):
                          dtype=np.float64)
 
     # Perform the downsampling.
-    output_grid = downsample.downsample_grid(input_grid, output_gridsize)
+    output_grid = downsample_grid(input_grid, output_gridsize)
 
     # Find any instances where the output grid is not 1.
     w = np.where((output_grid <= 1.0-tol) & (output_grid >= 1.0+tol))[0]
@@ -170,7 +170,7 @@ def test_multiple_input(input_gridsize=128, output_gridsize=64):
         input_grid[i*conversion, j*conversion, k*conversion] = conversion**3
 
     # Run the downsampler.
-    output_grid = downsample.downsample_grid(input_grid, output_gridsize)
+    output_grid = downsample_grid(input_grid, output_gridsize)
 
 
     # Find any instances where the output grid is not 1.
@@ -236,11 +236,11 @@ def test_random(input_gridsize=128, output_gridsize=64,
                                 input_gridsize)
 
     # Run the code with the randomly generated input grid.
-    output_grid = downsample.downsample_grid(input_grid, output_gridsize)
+    output_grid = downsample_grid(input_grid, output_gridsize)
 
     # Now we want to set up the known grid.
-    known_grid_name = "{0}/known_grid_in{1}_out{2}_seed{3}.npz" \
-                       .format(test_dir, input_gridsize, output_gridsize, seed)
+    known_grid_name = "./known_grid_in{0}_out{1}_seed{2}.npz" \
+                       .format(input_gridsize, output_gridsize, seed)
 
     # If we're saving a new 'correct' output grid, do so and exit.
     if save_output:
