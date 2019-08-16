@@ -40,9 +40,11 @@ If you are going to make your code publicly available (especially if it is going
 
 If it is absolutely impossible to cover a code block under normal circumstances, but you are certain that this code block should be included, you can mark it as ''cannot be covered'' by adding ``# pragma: no cover`` to every line that cannot be covered, or to a code branch (like an if-statement).
 
-.. admonition:: Example
+.. note::
 
-    Let's say you have the following code::
+    Let's say you have the following code:
+
+    .. code:: python
 
         <main_code>
         if flag:
@@ -50,7 +52,9 @@ If it is absolutely impossible to cover a code block under normal circumstances,
             <do_another_action>
         <main_code>
 
-    If in this code snippet, the if-statement cannot be executed under normal circumstances (and therefore cannot be covered), you can exclude it by writing it like this::
+    If in this code snippet, the if-statement cannot be executed under normal circumstances (and therefore cannot be covered), you can exclude it by writing it like this:
+
+    .. code:: python
 
         <main_code>
         if flag:  # pragma: no cover
