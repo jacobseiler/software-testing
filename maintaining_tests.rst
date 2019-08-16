@@ -34,10 +34,31 @@ If you cannot reach 100% coverage, ask yourself why this is:
 - Is this code block operating system or architecture-specific (like, having a code block solely for Windows machines, but you are testing on Linux)?
 - Or, analogously, is this code block Python version specific (Python 2 and 3)?
 
-
 One way of dealing with some of these issues, is by using a CI (continuous integration) service like Travis CI (https://travis-ci.com).
 By using a CI service, one can perform all tests using all combinations of operating systems, architectures (sometimes at least) and Python versions.
 If you are going to make your code publicly available (especially if it is going to be written up in a package), it is a really good idea to have at least one CI service active.
+
+If it is absolutely impossible to cover a code block under normal circumstances, but you are certain that this code block should be included, you can mark it as ''cannot be covered'' by adding ``# pragma: no cover`` to every line that cannot be covered, or to a code branch (like an if-statement).
+
+.. admonition:: Example
+
+    Let's say you have the following code::
+
+        <main_code>
+        if flag:
+            <do_action>
+            <do_another_action>
+        <main_code>
+
+    If in this code snippet, the if-statement cannot be executed under normal circumstances (and therefore cannot be covered), you can exclude it by writing it like this::
+
+        <main_code>
+        if flag:  # pragma: no cover
+            <do_action>
+            <do_another_action>
+        <main_code>
+
+    This will automatically exclude the if-statement and everything inside it from the code coverage.
 
 CodeCov
 -------
