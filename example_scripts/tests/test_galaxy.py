@@ -32,7 +32,7 @@ passing.
 Author: Jacob Seiler
 """
 
-import galaxy
+from example_scripts import galaxy
 
 import pytest
 
