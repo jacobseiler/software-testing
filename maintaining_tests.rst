@@ -15,6 +15,33 @@ pytest-pep8
 - Currently, the scripts in this repo are not PEP8-compliant, as you will see when adding the ``--pep8`` option;
 
 
+Continuous Integration (CI)
+===========================
+Another important part of maintaining your code/tests, is by using a continuous integration (CI) service, like Travis CI (https://travis-ci.com).
+A CI service allows you to execute a series of specified tests on the GitHub repo, every time a commit (or set of commits) is being pushed.
+However, unlike executing tests on your own computer, a CI service can do this using far more flexibility and this can be integrated into your GitHub repo.
+**Should ``tox`` be mentioned here?**
+
+What is a CI service?
+---------------------
+So, what does a CI service like Travis CI do exactly?
+Once set up properly for your GitHub repo, Travis will be notified by GitHub every time a push has been made.
+When a push was made, Travis will automatically set up a collection of environments (as specified by the ``.travis.yml`` file), clone the repo and execute a bunch of scripts.
+These scripts can range from simply installing all the requirements and doing the pytests; to checking if a repo can be packaged up properly; to even generating and uploading entire webpages.
+It allows for many pipelines to be automated.
+Here, we just focus on getting our pytests done, which requires the simple ``.travis.yml`` file in this repo.
+
+One thing to remember when using a CI service, is that it starts off completely blank.
+This means that you have to specify everything that is required to execute the tests.
+The benefit of this is that it makes it really easy to spot if you forgot to add a requirement somewhere (as a test will crash or fail), or made an assumption about the state of the system (for example, Windows uses 32-bit and 64-bit versions of its OS, while Linux and Mac OS-X solely use 64-bit versions).
+It also allows you to check your code using OSs or Python versions that you do not have access to (especially in the case of the former).
+
+Another cool thing about using a CI service, is that they can report their status back to GitHub on the specific commit they used.
+This, for example, allows for a CI service to FAIL a commit if one of their tests failed, informing you immediately that there is something wrong with that commit.
+It is generally speaking a good idea to have at least one CI service active for your GitHub repo at all times, especially if it is something that will be open-source.
+Travis CI is one of the few CI services that allows for private repos to be tested as well for no cost, although with a reduced capacity.
+
+
 Coverage
 ========
 Why do coverage?
@@ -22,7 +49,7 @@ Why do coverage?
 Coverage in your code is very important for many different things, with the most important ones being:
 
 - It allows you to write near-exhaustive tests for your scripts: You can track what parts of your code require special tests to be triggered;
-- It checks for redundancy in your code: If you cannot find a single way to make a part of your code execute, then that code is probably redundant (this happens much more than you think);
+- It checks for redundancy in your code: If you cannot find a single way to make a part of your code execute (as it covers a case that was already covered earlier for example), then that code is probably redundant or unnecessary (this happens much more than you think);
 - It also can inform you very quickly when newly added features are currently not tested for, as your code coverage will have decreased;
 - At the same time, as you usually write special case tests to cover exception cases in your code (got to get that coverage up), adding new features will automatically check if everything is still compatible;
 
@@ -34,10 +61,7 @@ If you cannot reach 100% coverage, ask yourself why this is:
 - Is this code block operating system or architecture-specific (like, having a code block solely for Windows machines, but you are testing on Linux)?
 - Or, analogously, is this code block Python version specific (Python 2 and 3)?
 
-One way of dealing with some of these issues, is by using a CI (continuous integration) service like Travis CI (https://travis-ci.com).
-By using a CI service, one can perform all tests using all combinations of operating systems, architectures (sometimes at least) and Python versions.
-If you are going to make your code publicly available (especially if it is going to be written up in a package), it is a really good idea to have at least one CI service active.
-
+One way of dealing with some of these issues, is by using a CI service as introduced before.
 If it is absolutely impossible to cover a code block under normal circumstances, but you are certain that this code block should be included, you can mark it as ''cannot be covered'' by adding ``# pragma: no cover`` to every line that cannot be covered, or to a code branch (like an if-statement).
 
 **Example:**
@@ -77,11 +101,11 @@ After that, you can either manually sent the coverage reports, or you can add tw
     after_success:
     - codecov
 
-If you make sure that you have the Python package `codecov` installed, then Travis will automatically send any made coverage reports to CodeCov.
+If you make sure that you have the Python package ``codecov`` installed, then Travis will automatically send any made coverage reports to CodeCov.
 
 Additionally, one can make a ``.codecov.yml`` file in the repo root directory (like the ``.travis.yml`` file).
 Here, one can specify the different options that CodeCov needs to take into account, and how you want the code coverage to be reported on the repo.
-Using this, it is also possible for CodeCov to FAIL a commit if its coverage does not meet a specified threshold (currently, this is not done in the ``.codecov.yml`` file).
+Using this, it is also possible for CodeCov to FAIL a commit (like Travis CI can) if its coverage does not meet a specified threshold (currently, this is not done in the ``.codecov.yml`` file).
 For example, you can make a commit fail if the code coverage of the entire package falls below 95%, or if the code coverage of the made changes is below 90% (and so on).
 This can be extremely useful when you have an open-source package and others make pull requests to your package, while it also enforces you to keep all your tests up-to-date.
 
