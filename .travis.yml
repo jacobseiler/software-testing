@@ -20,10 +20,10 @@ matrix:
       language: generic       # 'language: python' is an error on Travis CI macOS
 
 before_install:
-  - python3 -m pip install --upgrade pip # Apparently both Linux and osx are happy with pip3.
+  - python3 -m pip install --upgrade pip
+install:
   - python3 -m pip install -r requirements.txt
-
 script:
-  - pytest # Ensure we're using Python3 to run pytest.
+  - pytest
 after_success:
   - codecov
