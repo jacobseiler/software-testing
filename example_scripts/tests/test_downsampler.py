@@ -4,7 +4,7 @@ import numpy as np
 import itertools
 from os import path
 
-from downsampler import downsample_grid
+from example_scripts.downsampler import downsample_grid
 
 # Save the path to this directory
 dirpath = path.dirname(__file__)
@@ -235,8 +235,9 @@ def test_random(input_gridsize=128, output_gridsize=64,
     output_grid = downsample_grid(input_grid, output_gridsize)
 
     # Now we want to set up the known grid.
-    known_grid_name = f"{dirpath}/known_grid_in{input_gridsize}_out{output_gridsize}_" \
-                      f"seed{seed}.npz"
+    known_grid_name =\
+        (f"{dirpath}/data/known_grid_in{input_gridsize}_out{output_gridsize}_"
+         f"seed{seed}.npz")
 
     # If we're saving a new 'correct' output grid, do so and exit.
     if save_output:
