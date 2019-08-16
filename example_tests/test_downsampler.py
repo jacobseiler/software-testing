@@ -1,20 +1,16 @@
 #!/usr/bin:env python
 from __future__ import print_function
 import numpy as np
-import argparse
-import sys
-import os
 import itertools
-
-try: # Python2
-    from urllib import urlretrieve
-except ImportError: #Python3
-    from urllib.request import urlretrieve
-import subprocess
+from os import path
 
 from downsampler import downsample_grid
 
-tol = 1e-16  # Set the tolerance of the tests.
+# Save the path to this directory
+dirpath = path.dirname(__file__)
+
+# Set the tolerance of the tests.
+tol = 1e-16
 
 
 def unit_tests(grid, expected_gridsize, expected_datatype=np.float64):
@@ -239,8 +235,8 @@ def test_random(input_gridsize=128, output_gridsize=64,
     output_grid = downsample_grid(input_grid, output_gridsize)
 
     # Now we want to set up the known grid.
-    known_grid_name = "./known_grid_in{0}_out{1}_seed{2}.npz" \
-                       .format(input_gridsize, output_gridsize, seed)
+    known_grid_name = f"{dirpath}/known_grid_in{input_gridsize}_out{output_gridsize}_" \
+                      f"seed{seed}.npz"
 
     # If we're saving a new 'correct' output grid, do so and exit.
     if save_output:
