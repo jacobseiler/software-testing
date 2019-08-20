@@ -1,4 +1,40 @@
-#!/usr/bin:env python
+"""
+Tests the functions in the ``downsampler`` module.  The functions here were written a good
+2+ years ago; can you modernize them and improve their robustness?  This is a form of
+maintaining tests, make sure they can be extended in future!
+
+Implemented Tests
+-----------------
+
+A grid full of 1s should downsample to a grid of 1s.
+
+A grid where every Nth cell is the value of N (where N = input gridsize/output gridsize)
+should downsample to a grid of 1s.
+
+A grid of random numbers, generated using a specified seed, should downsample to the
+saved output.
+
+Your Tasks
+----------
+
+``unit_tests`` checks some basic properties.  However, I haven't written a test to ensure
+if any of the errors raised by this function are actually hit :O!  Use
+``pytest.mark.parameterize`` to write a test for ``unit_tests``.  There are multiple
+errors that can be raised, ensure that you've written enough tests to test EVERY ``if`
+condition.  This is a form of ensuring your code has good **coverage**.
+
+Update the random numbers test (``test_random``) to use ``pytest.mark.parameterize``
+instead. See ``test_galaxy`` module for an example of this.  Reframing the function with
+this method makes it easier to extend and ensure tests are more robust in future.
+
+``np.where`` is a clumsy way to check closeness.  Update this to use ``np.allclose``.  See
+``test_galaxy`` module for an example of this.
+
+In my ``test_random`` function, I have a ``save_output`` flag.  Is this a good idea?
+Should it be EASY to update the tests? If it is, why?  If it's not, remove the flag.
+Should it be replaced by something else?
+"""
+
 from __future__ import print_function
 import numpy as np
 import itertools
@@ -235,9 +271,8 @@ def test_random(input_gridsize=128, output_gridsize=64,
     output_grid = downsample_grid(input_grid, output_gridsize)
 
     # Now we want to set up the known grid.
-    known_grid_name =\
-        (f"{dirpath}/data/known_grid_in{input_gridsize}_out{output_gridsize}_"
-         f"seed{seed}.npz")
+    known_grid_name = "{0}/data/known_grid_in{1}_out{2}_" \
+                      "seed{3}.npz".format(dirpath, input_gridsize, output_gridsize, seed)
 
     # If we're saving a new 'correct' output grid, do so and exit.
     if save_output:
