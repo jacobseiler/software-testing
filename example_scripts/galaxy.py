@@ -2,7 +2,7 @@
 In this module, we're generating a bunch of Galaxy objects and then doing some
 calculations on them.
 
-We've implemented some tests in ``test_galaxies.py``.
+We've implemented some tests in ``test_galaxy.py``.
 
 Implemented Tests
 -----------------
@@ -14,7 +14,7 @@ Generate some data using a pre-determined seed and check the results match the e
 Your Tasks
 ----------
 
-Look at ``test_galaxies.py`` for some ideas on some tasks for you to implement.
+Look at ``test_galaxy.py`` for some ideas on some tasks for you to implement.
 
 Author: Jacob Seiler
 """

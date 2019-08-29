@@ -1,5 +1,5 @@
 codecov:
-    token: 40f53a18-2bdf-4652-9ba6-3efdc50e47b7  # Token is only necessary for as long as this repo is private
+    token: 3dce9231-5b59-428c-b708-0b5ec1be2f30  # Token is only necessary for as long as this repo is private
     notify:
         require_ci_to_pass: yes
 
