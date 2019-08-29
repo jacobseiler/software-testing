@@ -1,11 +1,14 @@
 PLUGINS
 =======
+In order to use a ``pytest`` plugin, one will have the install it first using ``pip install pytest-xxx``, like ``pip install pytest-cov`` for the coverage plugin for ``pytest``. 
+
 pytest-cov
 ----------
 - By using the ``pytest-cov`` plugin, one can check which lines in a package or set of scripts are currently covered by all pytests;
 - Instead of executing ``pytest``, executing ``pytest --cov --cov-report=term-missing`` will automatically track coverage over all pytests and print out the results later;
+- Optionally, one could add the ``--cov-branch`` option to also get a report on branch coverage (which was explained by Will);
 - It is also possible to write these options into a ``setup.cfg`` file, such that they are automatically used whenever ``pytest`` is executed;
-- In the same file, one can also write options for the ``pytest-cov`` plugin itself (or ``coverage.py``, as the package is actually called that runs it in the background);
+- In the same file, one can also write options for the ``pytest-cov`` plugin itself (or ``coverage.py``, as that is what the package is actually called that runs it in the background);
 
 pytest-pep8
 -----------
@@ -64,7 +67,8 @@ If you cannot reach 100% coverage, ask yourself why this is:
 One way of dealing with some of these issues, is by using a CI service as introduced before.
 If it is absolutely impossible to cover a code block under normal circumstances, but you are certain that this code block should be included, you can mark it as ''cannot be covered'' by adding ``# pragma: no cover`` to every line that cannot be covered, or to a code branch (like an if-statement).
 
-**Example:**
+Example Code
+------------
 Let's say you have the following code:
 
 .. code:: python
@@ -86,6 +90,26 @@ If in this code snippet, the if-statement cannot be executed under normal circum
     main_code_continued()
 
 This will automatically exclude the if-statement and everything inside it from the code coverage.
+
+
+Example Coverage
+----------------
+An example of a coverage output using ``pytest`` would be:
+
+.. code:: bash
+
+    ----------- coverage: platform win32, python 3.6.6-final-0 -----------
+    Name                             Stmts   Miss  Cover   Missing
+    --------------------------------------------------------------
+    example_scripts\__init__.py          0      0   100%
+    example_scripts\downsampler.py      91     69    24%   39-103, 141-172, 215-217, 222-225, 228-231, 263-273
+    example_scripts\galaxy.py           58     21    64%   51-52, 149, 168-169, 206-219, 245-254
+    --------------------------------------------------------------
+    TOTAL                              149     90    40%
+
+This is the output of the current pytest coverage of this repo.
+It tells us that there are still some lines left in the ``galaxy.py`` file to be covered, and many lines in the ``downsampler.py``.
+
 
 CodeCov
 -------
