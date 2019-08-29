@@ -11,13 +11,13 @@ Generate some data using a pre-determined seed and check the results match the e
 Your Tasks
 ----------
 
-Generate some random galaxies and write them to file (using the functions in
-``galaxy.py``). Read this data back in and ensure that it is correct.  Should this data be
-kept on disk after the test? Should the test delete it?
+Test the ``write_galaxies`` option for ``generate_random_data``. Read this data back in
+and ensure that it is correct.  Should this data be kept on disk after the test? Should
+the test delete it?
 
 Generate some random galaxies and properties and write them both to file.
 In the test proper, read in the galaxies, execute the same functions, then check if the
-results match the answer written to file. 
+results match the answer written to file.
 
 Generate a random set of galaxies and check their output. How do you handle random numbers
 in testing scenarios?
@@ -32,7 +32,7 @@ passing.
 Author: Jacob Seiler
 """
 
-import galaxy
+from example_scripts import galaxy
 
 import pytest
 
@@ -47,6 +47,7 @@ def test_gal_class():
 
     assert(gal.x == 0.5)
     assert(gal.y == -21.5)
+    #assert(gal.z == 142.4)
     assert(gal.mass == -20)
 
 
@@ -80,7 +81,7 @@ def test_mass_in_region(x_bound, y_bound, expected_mass, expected_N, seed):
         The mass inside the region specified by
         (x_bound[0], y_bound[0]), (x_bound[1], y_bound[1]).
 
-    expected_N : int 
+    expected_N : int
         The number of galaxies inside the region specified by
         (x_bound[0], y_bound[0]), (x_bound[1], y_bound[1]).
 
@@ -92,7 +93,7 @@ def test_mass_in_region(x_bound, y_bound, expected_mass, expected_N, seed):
     import numpy as np
 
     # First generate some random galaxies.
-    gals = galaxy.generate_random_data(seed=seed, write_to_file=False)
+    gals = galaxy.generate_random_data(seed=seed)
 
     # If the seed is 777, then we know what the output should be.
     if seed == 777:
@@ -102,7 +103,7 @@ def test_mass_in_region(x_bound, y_bound, expected_mass, expected_N, seed):
         mass_in_region, N_in_region = galaxy.mass_within_region(gals, x_bound, y_bound)
 
         # Because 'mass_in_region' is a floating point, don't want to test pure equality.
-        test_result = np.allclose(mass_in_region, expected_mass) 
+        test_result = np.allclose(mass_in_region, expected_mass)
         assert(test_result)
 
         assert(N_in_region == expected_N)

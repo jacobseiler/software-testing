@@ -14,17 +14,7 @@ Generate some data using a pre-determined seed and check the results match the e
 Your Tasks
 ----------
 
-Generate some random galaxies and properties and write them both to file.  In the test proper, read in the galaxies, execute the same functions, then check if the results match the answer written to file. 
-
-Generate a random set of galaxies and check their output. How do you handle random numbers
-in testing scenarios?
-
-What happens when there are zero galaxies in the region passed to
-``mass_within_region()``? How should we handle this case? Is there a "correct" answer?
-
-Extend the module to handle 3 spatial dimensions. How would you update the tests to
-account for this? BE CAREFUL! At every step, we want to ensure that our tests are still
-passing.
+Look at ``test_galaxies.py`` for some ideas on some tasks for you to implement.
 
 Author: Jacob Seiler
 """
@@ -114,10 +104,10 @@ def mass_within_region(gals, x_bound, y_bound):
 
 
 def generate_random_data(boxsize=100.0, mass_factor=1.0, N=1000, seed=None,
-                         write_to_file=True, fname_out="./test_data.txt",):
+                         fname_out=None):
     """
-    Generates random Galaxy instances. Either writes the galaxies to file
-    or returns them depending upon the value of ``write_to_file``.
+    Generates random Galaxy instances. If ``fname_out`` is specified, then writes the
+    galaxies to file; otherwise, returns them.
 
     Parameters
     ----------
@@ -137,21 +127,18 @@ def generate_random_data(boxsize=100.0, mass_factor=1.0, N=1000, seed=None,
         Seed used to initialize the state of the random generator. If ``None``, will use
         the system clock as defined by ``numpy.random.seed()``.
 
-    write_to_file: bool
-        If set, writes the generated galaxies to a file specified by ``fname_out``.
-        Otherwise, returns a list of the generated galaxies.
-
     fname_out: string
-        File name where the galaxies are written to. Required if ``write_to_file`` is set.
+        File name where the galaxies are written to. If ``None``, will return the galaxies
+        instead.
 
     Returns
     ---------
 
-    If ``write_to_file`` is specified:
+    If ``fname_out`` is specified:
         ``N`` galaxies with random x/y positions and mass saved to file ``fname_out``.
         The data format is three columns: x y Mass.
 
-    If ``write_to_file`` is not specified:
+    If ``fname_out`` is not specified:
         gals: a list of ``Galaxy`` instances with length ``N``.
             Galaxies with random x/y positions and mass.
     """
@@ -170,19 +157,17 @@ def generate_random_data(boxsize=100.0, mass_factor=1.0, N=1000, seed=None,
 
     mass = np.random.uniform(size=N) * mass_factor
 
+    # Generate the galaxies!
+    gals = []
+    for (pos_x, pos_y, mass_val) in zip(x, y, mass):
+        gal = Galaxy(pos_x, pos_y, mass_val)
+        gals.append(gal)
+
     # We're either returning a list of galaxies or writing the values to file.
-    if write_to_file:
+    if fname_out:
         write_galaxies(gals, fname_out, boxsize, mass_factor, seed)
-
         return None
-
     else:
-
-        gals = []
-        for (pos_x, pos_y, mass_val) in zip(x, y, mass):
-            gal = Galaxy(pos_x, pos_y, mass_val)
-            gals.append(gal)
-
         return gals
 
 
@@ -215,7 +200,7 @@ def write_galaxies(gals, fname_out, boxsize, mass_factor, seed=None):
     ---------
 
     Saves a file named ``fname_out`` with the x/y positions and mass saved. The data
-    format is three columns: x y Mass. 
+    format is three columns: x y Mass.
     """
 
     with open(fname_out, "w") as f_out:
@@ -226,9 +211,8 @@ def write_galaxies(gals, fname_out, boxsize, mass_factor, seed=None):
         f_out.write(f"# Random seed {seed}\n")
         f_out.write(f"# x\ty\tMass\n")
 
-        for (pos_x, pos_y, mass_val) in zip(x, y, mass):
-
-            f_out.write(f"{pos_x} {pos_y} {mass_val}\n")
+        for gal in gals:
+            f_out.write(f"{gal.x} {gal.y} {gal.mass}\n")
 
         print(f"Successfully wrote to {fname_out}")
 
