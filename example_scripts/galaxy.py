@@ -48,7 +48,7 @@ class Galaxy(object):
         <Galaxy object at BLAH-USELESS-MEMORY-ADDRESS>
         """
 
-        string = f"[{self.x}, {self.y}] mass: {self.mass}"
+        string = "[{0}, {1}] mass: {2}".format(self.x, self.x, self.mass)
         return string
 
 
@@ -206,15 +206,15 @@ def write_galaxies(gals, fname_out, boxsize, mass_factor, seed=None):
     with open(fname_out, "w") as f_out:
 
         # Be good to our future-selves and write a header.
-        f_out.write(f"# Box-Size {boxsize}\n")
-        f_out.write(f"# Mass-factor {mass_factor}\n")
-        f_out.write(f"# Random seed {seed}\n")
-        f_out.write(f"# x\ty\tMass\n")
+        f_out.write("# boxsize {0}\n".format(boxsize))
+        f_out.write("# mass_factor {0}\n".format(mass_factor))
+        f_out.write("# seed {0}\n".format(seed))
+        f_out.write("# x\ty\tMass\n")
 
         for gal in gals:
-            f_out.write(f"{gal.x} {gal.y} {gal.mass}\n")
+            f_out.write("{0} {1} {2}\n".format(gal.x, gal.y, gal.mass))
 
-        print(f"Successfully wrote to {fname_out}")
+        print("Successfully wrote to {0}".format(fname_out))
 
     return
 
@@ -249,6 +249,6 @@ def read_data(fname):
         gal = Galaxy(gal_vals[0], gal_vals[1], gal_vals[2])
         gals.append(gal)
 
-    print(f"Read {len(gals)} galaxies from {fname}")
+    print("Read {0} galaxies from {1}".format(len(gals), fname))
 
     return gals

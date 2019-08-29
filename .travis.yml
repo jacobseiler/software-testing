@@ -1,11 +1,13 @@
 sudo: required
 dist: xenial
-language: python 
+language: python
 
 notifications:
   email:
-    on_success: never
-    on_failure: never
+    recipients:
+      - jseiler@swin.edu.au
+    on_success: change
+    on_failure: always
 
 matrix:
   include:
@@ -14,7 +16,7 @@ matrix:
     - os: linux
       python: "3.7"
 
-    - os: osx 
+    - os: osx
       python: "3.7"
       osx_image: xcode10.2  # Python 3.7.2 running on macOS 10.14.3
       language: generic       # 'language: python' is an error on Travis CI macOS
@@ -24,6 +26,7 @@ before_install:
 install:
   - python3 -m pip install -r requirements.txt
 script:
-  - pytest
+  - python3 -m pytest # Ensure we're using Python3 to run pytest.
+
 after_success:
   - codecov
