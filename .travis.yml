@@ -26,7 +26,7 @@ before_install:
 install:
   - python3 -m pip install -r requirements.txt
 script:
-  - python3 -m pytest # Ensure we're using Python3 to run pytest.
+  - pytest # Ensure we're using Python3 to run pytest.
 
 after_success:
   - codecov
