@@ -54,7 +54,7 @@ This will work perfectly fine, even if it is not totally fair to do (it may forc
 Unlike the previous mistake, this mistake is much harder to track down once somebody encounters it.
 For example, let's say that you have a code that requires AstroPy 3.0 or later, but you only specified the package as a requirement without a minimum version.
 Now, when somebody tries to use your code using AstroPy 1.x, they will be convinced that they satisfy all requirements, as they already have AstroPy.
-Then, when using your code, it will attempt to use a functionality that had not been implemented yet in AstroPy 2.x, and it will raise an error.
+Then, when using your code, it will attempt to use a functionality that had not been implemented yet in AstroPy 1.x, and it will raise an error.
 For the user, this error will not provide any indication that their requirements are outdated, and it will not provide you with much information either about what the minimum version should have been.
 Encountering a problem like this is extremely annoying and frustrating for both the user and the maintainer.
 
