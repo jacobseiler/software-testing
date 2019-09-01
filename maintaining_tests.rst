@@ -1,5 +1,73 @@
-PLUGINS
-=======
+Maintaining tests
+=================
+Once you have written tests for your code, you have jumped the biggest hurdle.
+However, you are not done yet.
+While writing tests for your code is extremely important, it is just as important to maintain them and the code they are testing.
+Below, we give an overview of the different ways you can make maintaining tests/code easier; and make them more efficient.
+
+But first, you might be wondering why maintaining code and tests is so important.
+After all, you have written your tests; everything works properly; and you are the only one making changes to the code (or even use it).
+The reason is pretty simple: Unlike the old classics like C; C++; and Fortran, which have proven to stand the test of time, Python is a very rapidly evolving programming language.
+Besides Python 2.7 (which should have never existed anyway and will finally be deprecated on the 1st of January 2020), no single minor Python version has survived for two years before being succeeded (`source <https://www.python.org/doc/versions/>`_).
+Not only that, but the language itself is also continuously becoming more and more popular, as it is currently the third most popular programming language, after C and Java (`source <https://www.tiobe.com/tiobe-index/>`_), and might overtake them fairly soon.
+What this means is that a brand-new, state-of-the-art Python script/package today, could quickly become an outdated one within just a few years.
+There is nothing worse than coming back to an old piece of code a few years later, and finding that it has numerous bugs and is completely incompatible with your current environment.
+
+
+Code requirements
+=================
+Almost every Python code relies on a collection of external third-party packages, with NumPy probably being the most common one.
+This means that if anyone wants to use your code, they need to have these third-party packages installed.
+The most common thing to do, is to write all of these packages down in a file called ``requirements.txt`` and include this on the GitHub repo.
+If your code is a package, you can write your ``setup.py`` file such that it automatically ensures that the list of requirements in this file is satisfied.
+
+As easy as that may sound, there are two very common mistakes being made regarding the specification of a code's requirements, both greatly hampering the maintainability and usability of a code:
+
+- Not specifying all requirements that a code needs.
+  This happens mostly due to them being so commonly used (like NumPy or Matplotlib) or because they are already satisfied by another requirement;
+- Not specifying minimum versions for most (all) requirements.
+
+Not specifying all requirements is dangerous, regardless of the reason for it (although the latter reason is much more dangerous).
+An easy way to check what your requirements should be, is to go through every Python file and check your imports.
+Unless you are importing from either a builtin package (like ``os``; ``sys``; ``logging``; ``time`` etc.) or from a Python file contained in the same repo, it is a third-party requirement and you should specify it.
+Do not rely on a different requirement covering it for you.
+
+An example of this would be the following with the Matplotlib (MPL) package:
+
+1. My code requires NumPy and MPL;
+2. MPL requires NumPy;
+3. Installing MPL will therefore install NumPy;
+4. Thus, requiring MPL would give me NumPy as well;
+5. So, NumPy does not need to be specified as a requirement.
+
+This reasoning is wrong because one cannot guarantee that MPL will require NumPy for the rest of eternity (although I would not be surprised if it did).
+If somehow MPL would get rid of its reliance on the NumPy package and therefore removes it from its requirements, any code that requires both MPL and NumPy using this reasoning will no longer work.
+This means that its maintainer will now have to make an update to the code stating that it does require NumPy, which could have been avoided altogether.
+In case of released packages, it could literally render all currently released versions unusable (as their requirements cannot be changed anymore), especially if the second mistake from above was made as well.
+Simply put, if your code uses a specific third-party (so, not builtin) package, then you must specify it as a requirement.
+
+It is also important to specify the minimum version of most, if not all, requirements.
+This ensures that when the user has all packages installed that were specified by the requirements, they also have the same functionality as you expect them to have.
+A good starting point for figuring out the minimum required versions, is to check what the versions are that work and simply use these as your minimum required versions.
+This will work perfectly fine, even if it is not totally fair to do (it may force unnecessary package updates or cause unnecessary incompatibilities).
+
+Unlike the previous mistake, this mistake is much harder to track down once somebody encounters it.
+For example, let's say that you have a code that requires AstroPy 3.0 or later, but you only specified the package as a requirement without a minimum version.
+Now, when somebody tries to use your code using AstroPy 1.x, they will be convinced that they satisfy all requirements, as they already have AstroPy.
+Then, when using your code, it will attempt to use a functionality that had not been implemented yet in AstroPy 2.x, and it will raise an error.
+For the user, this error will not provide any indication that their requirements are outdated, and it will not provide you with much information either about what the minimum version should have been.
+Encountering a problem like this is extremely annoying and frustrating for both the user and the maintainer.
+
+It can however sometimes be a bit hard to figure out whether your minimum versions are still up-to-date.
+Usually, we update our local environments to newer versions even though that was not necessary.
+Specifying minimum versions that are much later than actually required, can cause problems with packages that have a maximum required version for the same package.
+Therefore, be a bit lean with what your minimum required versions are, but ALWAYS specify them.
+
+
+Pytest plugins
+==============
+We have learned about using pytests for testing your code.
+Here, we introduce a few plugins to ``pytest`` that can make it more efficient and allow for easier maintainability.
 In order to use a ``pytest`` plugin, one will have the install it first using ``pip install pytest-xxx``, like ``pip install pytest-cov`` for the coverage plugin for ``pytest``. 
 
 pytest-cov
@@ -23,7 +91,7 @@ Continuous Integration (CI)
 Another important part of maintaining your code/tests, is by using a continuous integration (CI) service, like Travis CI (https://travis-ci.com).
 A CI service allows you to execute a series of specified tests on the GitHub repo, every time a commit (or set of commits) is being pushed.
 However, unlike executing tests on your own computer, a CI service can do this using far more flexibility and this can be integrated into your GitHub repo.
-**Should ``tox`` be mentioned here?**
+It can even be set up such that it performs tests on a regular basis using CRON jobs (explained later on), which greatly increases the code's maintainability.
 
 What is a CI service?
 ---------------------
