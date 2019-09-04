@@ -3,14 +3,20 @@
 * 10:30 - 11:00 Morning Tea.
 * 11:00 - 12:30 Implementing your own tests.
 * 12:30 - 13:30 Lunch.
-* 13:30 - 14:30 Implementing your own tests.
-* 14:30 - 15:00 Maintaining your tests (`pytest-cov`, `pytest-pep8`).
+* 13:30 - 14:00 Implementing your own tests.
+* 14:00 - 15:00 Maintaining your tests
+    * Why you need to maintain your tests?  (Specifying minimum requirements
+      for packages).  E.g., Astropy and photoutils.
+    * Strategies to maintain and ensure the health of your tests.
+    * Intro/explanation of `pytest-cov` and `pytest-pep8`.
 * 15:00 - 15:30 Afternoon tea.
 * 15:30 - 17:00 Travis CI.
+    * Why we should use Travis. And why CIs are useful.
+    * The basics of setting up Travis.
     * Here's a bunch of extra things.  "When you do TRAVIS, here are a bunch of
       extension..."
-      * When you do code coverage, you can have it print or you can just send
-        it to `CodeCov`. It can auto-fail commits.
+      * Ellert will show how to set up CodeCov.
       * Badges
       * Codacy.
       * Pre-commit hooks?
+*  Then we leave.
