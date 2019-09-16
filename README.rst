@@ -1,4 +1,7 @@
-|TRAVIS|
+..
+    Unncomment this out and just leave ``|TRAVIS|`` once you have your TRAVIS
+    build running and your badge successfully added down the bottom of the
+    README.
 
 *************************************
 ADACS + ASTRO3D Code Testing Workshop
@@ -59,7 +62,7 @@ Links to GitHub
 ---------------
 
 A key to good testing is automation. During this workshop, we will be linking
-our tests to `codecov <https://codecov.io/>`_ and `TRAVIS <https://travis-ci.com/>`_.
+our tests to `codecov <https://codecov.io/>`_ and `Travis <https://travis-ci.com/>`_.
 We recommend heading to both of these sites, linking your GitHub account, and
 having a bit of a poke around.  Get comfortable with the interface.
 
