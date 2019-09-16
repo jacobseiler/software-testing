@@ -1,7 +1,6 @@
 .. code:: rst
 
     |TRAVIS|
-
 *Once you have your TRAVIS build running and your badge successfully added down the bottom of the README, you can use the above to add a shiny badge at the top of your repo.*
 
 
@@ -23,7 +22,7 @@ You should also set the **upstream** repo of your fork to be **this** repo,
 ``https://github.com/jacobseiler/software-testing``. Your ``.git/config`` file
 should hence look like...
 
-.. code::
+.. code:: bash
 
     [core]
         repositoryformatversion = 0
@@ -46,7 +45,7 @@ This setup will allow you to integrated any changes we make to this repo into
 your own fork by executing ``git pull upstream master``.
 
 Requirements
-============
+===========
 
 * The workshop exclusively uses Python.  Specifically, Python >=3.6.  **If are still
   using Python 2, stop.  Python 2 will no longer be supported after January 1st
