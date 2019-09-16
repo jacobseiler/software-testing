@@ -1,7 +1,9 @@
-..
-    Unncomment this out and just leave ``|TRAVIS|`` once you have your TRAVIS
-    build running and your badge successfully added down the bottom of the
-    README.
+.. code:: rst
+
+    |TRAVIS|
+
+*Once you have your TRAVIS build running and your badge successfully added down the bottom of the README, you can use the above to add a shiny badge at the top of your repo.*
+
 
 *************************************
 ADACS + ASTRO3D Code Testing Workshop
@@ -74,10 +76,13 @@ us just spitballing.  We don't have any hard and fast solutions for them.
 
 If you want help though, we have some tips...
 
-..
-  Adjust the URLs here to point to your own Travis badge! 
-  Add two dots before the ``|TRAVIS|`` marker as well, ``.. |TRAVIS| image:: Your URL``.
-  |TRAVIS| image:: https://travis-ci.com/jacobseiler/software-testing.svg?token=5c6Q56fcBuVVhRGKosZB&branch=master
+
+Badges
+======
+Adjust the URLs here to point to your own Travis badge!
+
+.. code:: rst
+
+  .. |TRAVIS| image:: https://travis-ci.com/jacobseiler/software-testing.svg?token=5c6Q56fcBuVVhRGKosZB&branch=master
     :alt: Travis Badge
     :target: https://travis-ci.com/jacobseiler/software-testing
-
