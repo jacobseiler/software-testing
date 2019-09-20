@@ -98,8 +98,6 @@ def test_mass_in_region(x_bound, y_bound, expected_mass, expected_N, seed):
     # If the seed is 777, then we know what the output should be.
     if seed == 777:
 
-        x_bound = [0, 50.0]
-        y_bound = [23.0, 28.0]
         mass_in_region, N_in_region = galaxy.mass_within_region(gals, x_bound, y_bound)
 
         # Because 'mass_in_region' is a floating point, don't want to test pure equality.
