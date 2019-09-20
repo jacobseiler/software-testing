@@ -1,4 +1,6 @@
 __pycache__
-*.txt
 !requirements.txt
+*.txt
+*.xlsx
 .coverage
+presentations/*.pptx
